@@ -103,13 +103,27 @@ public class Stat {
     }
 
     public boolean evenBalance(){
-		int[] a1 = new int[data.length/2];
-		int[] a2 = new int[data.length/2];
-		for(int i = 0; i < data.length/2; i++){
+		int[] a1;
+		int[] a2;
+		if(data.length%2 == 1){
+			a1 = new int[data.length/2+1];
+			a2 = new int[data.length/2+1];
+			for(int i = 0; i < data.length/2 + 1; i++){
 			a1[i] = data[i];
+			}
+			for(int i = data.length/2; i < data.length; i++){
+				a2[i - data.length/2] = data[i];
+			}
 		}
-		for(int i = data.length/2; i < data.length; i++){
-			a2[i-data.length/2] = data[i];
+		else{
+			a1 = new int[data.length/2];
+			a2 = new int[data.length/2];
+			for(int i = 0; i < data.length/2; i++){
+				a1[i] = data[i];
+			}
+			for(int i = data.length/2; i < data.length; i++){
+				a2[i - data.length/2] = data[i];
+			}
 		}
 		int temp = 0;
 		int temp2 = 0;
@@ -127,6 +141,31 @@ public class Stat {
 		}
     }
 
+    public int[] mode2(){
+	int counter = 0;
+	int isuck = 0;
+	int ret[];
+	for(int i = 0; i < data.length; i++){
+		if(freq(data[i])>counter){
+			counter = freq(data[i]);
+		}
+	}
+	for(int i = 0; i < data.length; i++){
+		if(freq(data[i])==counter){
+			isuck += 1;
+		}
+	}
+	ret = new int[isuck];
+	int inefficient = 0;
+	for(int i = 0; i < data.length; i++){
+		if(freq(data[i])==counter){
+			ret[inefficient] = data[i];
+			inefficient ++;
+		}
+	}
+	return ret;
+    }
+
     public int mode(){
 	int counter = 0;
 	int ret = data[0];
@@ -137,10 +176,6 @@ public class Stat {
 		}
 	}
 	return ret;
-    }
-
-    public int mode2(){
-	
     }
 
     public static void main( String[] args ) {
