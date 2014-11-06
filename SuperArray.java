@@ -21,7 +21,14 @@ public class SuperArray{
     return a;
   }
   public void resize(){
+    temp = new Object[size];
+    for(int i = 0; i < temp.length; i++){
+      temp[i] = data[i];
+    }
     data = new Object[size + 10];
+    for(int i = 0; i < temp.length; i++){
+      data[i] = temp[i];
+    }
     emptyspace += 10;
   }
   public void add(Object o){
