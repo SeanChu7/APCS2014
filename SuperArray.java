@@ -31,17 +31,59 @@ public class SuperArray{
     }
     emptyspace += 10;
   }
-  public void add(Object o){
-    if(emptyspace != 0){
-      data[size] = o;
-      size++;
-      emptyspace --;
+  public int Size(){
+    return size;
+  }
+  public Object get(int i){
+    if(get > size - 1){
+      return "null";
     }
     else{
-      resize();
-      data[size] = o;
-      size++;
-      emptyspace --;
+      return data[get];
+    }
+  }
+  public Object remove(int i){
+    Object a = get(int i);
+    if(a == "null"){
+      return "null";
+    }
+    else{
+      a = data[i];
+      data[i] = "null";
+      return a;
+    }
+  }
+  public Object set(Object o, int i){
+    Object b = remove(int i);
+    if(b == "null"){
+      return "null";
+    }
+    else{
+      data[i] = o;
+      return b;
+    }
+  }
+  public void add(Object o, int i){
+    if(index > size){
+      if(emptyspace != 0){
+        data[size] = o;
+        size++;
+        emptyspace --;
+      }
+      else{
+        resize();
+        data[size] = o;
+        size++;
+        emptyspace --;
+      }
+    }
+    else if(index < 0){
+      
+    }
+    else{
+      for(int i = index; i < size; i++){
+        
+      }
     }
   }
 }
