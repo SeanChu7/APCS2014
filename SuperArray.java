@@ -13,15 +13,15 @@ public class SuperArray{
     emptyspace = i;
   }
   public String toString(){
-    String a = "[";
-    for(int i = 0; i < data.length; i++){
+    String a = "[ ";
+    for(int i = 0; i < size; i++){
       a += data[i] + " ";
     }
     a += "]";
     return a;
   }
   public void resize(){
-    temp = new Object[size];
+    Object[] temp = new Object[size];
     for(int i = 0; i < temp.length; i++){
       temp[i] = data[i];
     }
@@ -34,10 +34,14 @@ public class SuperArray{
   public void add(Object o){
     if(emptyspace != 0){
       data[size] = o;
+      size++;
+      emptyspace --;
     }
     else{
       resize();
       data[size] = o;
+      size++;
+      emptyspace --;
     }
   }
 }
