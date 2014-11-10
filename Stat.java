@@ -1,33 +1,28 @@
 import java.util.*;
 
-public class Stat {
+public class Stat extends SuperArray{
 
-    private int[] data;
-
+    private Object[] data;
 
     /**
      * Initialize the data array to a size of your choosing.
      */
     public Stat()  {
-	data = new int[3];
+	super(10);
     }
     
     /**
      * Initialize the data array to the specified size.
      */
     public Stat(int s)  {
-	data = new int[s];
+	super(s);
     }
 
     /**
      * Returns a string that contains all the elements of the array.
      */
     public String toString() {
-	String ret = "";
-	for(int i = 0; i < data.length; i++){
-		ret += data[i] + " ";
-	}
-	return ret;
+	super.toString();
     }
     
     /*
@@ -35,15 +30,13 @@ public class Stat {
      * values for each available space.
      */
     public void setValues() {
-	Scanner s = new Scanner(System.in);
-	int a;
-	for(int i = 0; i < data.length; i++){
-		System.out.println("Please input what you want as the value.\n");
-		a = s.nextInt();
-		data[i] = a;
+	Scanner scan = new Scanner( System.in );
+
+	for(int i=0; i < data.length; i++ ) {
+
+	    System.out.print( "Enter data: " );
+	    super.add(scan.nextInt(),i);
 	}
-	
-	
     }
 
     /**
@@ -51,9 +44,9 @@ public class Stat {
      */
     public int calcSum() {
 	int sum = 0;
-	for(int i = 0; i < data.length; i++){
-		sum += data[i];
-	}
+	for(int i=0; i < data.length; i++ )
+	    sum+= data[i];
+	
 	return sum;
     }
 
@@ -61,9 +54,7 @@ public class Stat {
      * Return the average of the data in the array.
      */
     public double calcAvg() {
-	int a = calcSum();
-	double b = a/data.length;
-	return b;
+	return calcSum() * 1.0 / data.length;
     }
 
     /**
@@ -71,11 +62,11 @@ public class Stat {
      */
     public int findMin() {
 	int min = data[0];
-	for(int i = 0; i < data.length; i++){
-		if(data[i] < min){
-			min = data[i];
-		}
-	}
+
+	for(int i=1; i < data.length; i++ )
+	    if ( data[i] < min )
+		min = data[i];
+	    
 	return min;
     }
 
@@ -84,101 +75,52 @@ public class Stat {
      */
     public int findMax() {
 	int max = data[0];
-	for(int i = 0; i < data.length; i++){
-		if(data[i] > max){
-			max = data[i];
-		}
-	}
+
+	for(int i=1; i < data.length; i++ )
+	    if ( data[i] > max )
+		max = data[i];
+	    
 	return max;
     }
 
-    public int freq(int n){
-	int counter = 0;
-	for(int i = 0; i < data.length; i++){
-		if(data[i] == n){
-			counter ++;
-		}
-	}
-	return counter;
+
+    public int frequency( int n ) {
+
+	int freq = 0;
+	for(int i=0; i < data.length; i++ )
+	    if ( data[i] == n )
+		freq++;
+
+	return freq;
     }
 
-    public boolean evenBalance(){
-		int[] a1;
-		int[] a2;
-		if(data.length%2 == 1){
-			a1 = new int[data.length/2+1];
-			a2 = new int[data.length/2+1];
-			for(int i = 0; i < data.length/2 + 1; i++){
-			a1[i] = data[i];
-			}
-			for(int i = data.length/2; i < data.length; i++){
-				a2[i - data.length/2] = data[i];
-			}
-		}
-		else{
-			a1 = new int[data.length/2];
-			a2 = new int[data.length/2];
-			for(int i = 0; i < data.length/2; i++){
-				a1[i] = data[i];
-			}
-			for(int i = data.length/2; i < data.length; i++){
-				a2[i - data.length/2] = data[i];
-			}
-		}
-		int temp = 0;
-		int temp2 = 0;
-		for(int i = 0; i<a1.length; i++){
-			temp += a1[i];
-		}
-		for(int i = 0; i<a2.length; i++){
-			temp2 += a2[i];
-		}
-		if(temp == temp2){
-			return true;
-		}		
-		else{
-			return false;
-		}
+
+    public boolean evenBalance() {
+	int lsum = 0;
+	int rsum = 0;
+
+	for (int i=0; i < data.length/2; i++ ) {
+	    lsum+= data[i];
+	    rsum+= data[ data.length - 1 - i];
+	}
+	return lsum == rsum;
     }
 
-    public int[] mode2(){
-	int counter = 0;
-	int isuck = 0;
-	int ret[];
-	for(int i = 0; i < data.length; i++){
-		if(freq(data[i])>counter){
-			counter = freq(data[i]);
-		}
-	}
-	for(int i = 0; i < data.length; i++){
-		if(freq(data[i])==counter){
-			isuck += 1;
-		}
-	}
-	ret = new int[isuck];
-	int inefficient = 0;
-	for(int i = 0; i < data.length; i++){
-		if(freq(data[i])==counter){
-			ret[inefficient] = data[i];
-			inefficient ++;
-		}
-	}
-	return ret;
-    }
+    public int mode() {
+	int guess = data[0];
+	int freq = frequency( guess );
 
-    public int mode(){
-	int counter = 0;
-	int ret = data[0];
-	for(int i = 0; i < data.length; i++){
-		if(freq(data[i])>counter){
-			ret = data[i];
-			counter = freq(data[i]);
-		}
+	for (int i=1; i < data.length; i++ ) {
+	    if ( frequency( data[i] ) > freq ) {
+		freq = frequency( data[i] );
+		guess = data[i];
+	    }
 	}
-	return ret;
+	return guess;
     }
 
     public static void main( String[] args ) {
+
 	int n;
 	Stat s;
 	Scanner scan = new Scanner( System.in );
@@ -189,12 +131,17 @@ public class Stat {
 	s = new Stat(n);
 
 	s.setValues();
-	System.out.println("Data: " + s );
+	System.out.println( "Data: " + s );
 	System.out.println("Sum: " +  s.calcSum() );
 	System.out.println("Average: " + s.calcAvg() );
 	System.out.println("Min: " + s.findMin() );
 	System.out.println("Max: " + s.findMax() );
-	System.out.println("Mode: " + s.mode() );
-	System.out.println("evenBalance?: " + s.evenBalance() );
+
+	System.out.println( "Frequency of 10: " + s.frequency(10));
+	System.out.println( "Frequency of -1: " + s.frequency(-1));
+
+	System.out.println( "Balanced? " + s.evenBalance() );
+
+	System.out.println( "Mode: " + s.mode() );
     }
 }
