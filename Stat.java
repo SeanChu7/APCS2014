@@ -2,8 +2,6 @@ import java.util.*;
 
 public class Stat extends SuperArray{
 
-    private Object[] data;
-
     /**
      * Initialize the data array to a size of your choosing.
      */
@@ -22,7 +20,7 @@ public class Stat extends SuperArray{
      * Returns a string that contains all the elements of the array.
      */
     public String toString() {
-	super.toString();
+	return super.toString();
     }
     
     /*
@@ -35,7 +33,7 @@ public class Stat extends SuperArray{
 	for(int i=0; i < data.length; i++ ) {
 
 	    System.out.print( "Enter data: " );
-	    super.add(scan.nextInt(),i);
+	    super.add(scan.nextInt(),500);
 	}
     }
 
@@ -45,7 +43,7 @@ public class Stat extends SuperArray{
     public int calcSum() {
 	int sum = 0;
 	for(int i=0; i < data.length; i++ )
-	    sum+= data[i];
+	    sum+= (int)data[i];
 	
 	return sum;
     }
@@ -61,11 +59,11 @@ public class Stat extends SuperArray{
      * Return the smallest value in the array.
      */
     public int findMin() {
-	int min = data[0];
+	int min = (int)data[0];
 
 	for(int i=1; i < data.length; i++ )
-	    if ( data[i] < min )
-		min = data[i];
+	    if ( (int)data[i] < min )
+		min = (int)data[i];
 	    
 	return min;
     }
@@ -74,11 +72,11 @@ public class Stat extends SuperArray{
      * Return the largest value in the array.
      */
     public int findMax() {
-	int max = data[0];
+	int max = (int)data[0];
 
 	for(int i=1; i < data.length; i++ )
-	    if ( data[i] > max )
-		max = data[i];
+	    if ( (int)data[i] > max )
+		max = (int)data[i];
 	    
 	return max;
     }
@@ -88,7 +86,7 @@ public class Stat extends SuperArray{
 
 	int freq = 0;
 	for(int i=0; i < data.length; i++ )
-	    if ( data[i] == n )
+	    if ( (int)data[i] == n )
 		freq++;
 
 	return freq;
@@ -100,20 +98,20 @@ public class Stat extends SuperArray{
 	int rsum = 0;
 
 	for (int i=0; i < data.length/2; i++ ) {
-	    lsum+= data[i];
-	    rsum+= data[ data.length - 1 - i];
+	    lsum+= (int)data[i];
+	    rsum+= (int)data[ data.length - 1 - i];
 	}
 	return lsum == rsum;
     }
 
     public int mode() {
-	int guess = data[0];
+	int guess = (int)data[0];
 	int freq = frequency( guess );
 
 	for (int i=1; i < data.length; i++ ) {
-	    if ( frequency( data[i] ) > freq ) {
-		freq = frequency( data[i] );
-		guess = data[i];
+	    if ( frequency( (int)data[i] ) > freq ) {
+		freq = frequency( (int)data[i] );
+		guess = (int)data[i];
 	    }
 	}
 	return guess;
